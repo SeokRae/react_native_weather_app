@@ -6,7 +6,8 @@ export default class App extends React.Component {
   // 데이터 api를 불러오게되면 이 값은 true가 된다.
   // 로딩 중에는 false
   state = {
-    isLoaded: false
+    isLoaded: false,
+    error: null
   };
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(position => {
@@ -15,7 +16,9 @@ export default class App extends React.Component {
         });
       },
       error => {
-        console.log(error);
+        this.setState({
+          error: error
+        })
       } 
     );
   }
@@ -31,6 +34,7 @@ export default class App extends React.Component {
             <Text style = {styles.loadingText}>
               Getting the weather
             </Text>
+            {error ? <Text style={styles.errorText}>{error}</Text> : null}
           </View>
         )}
       </View>
