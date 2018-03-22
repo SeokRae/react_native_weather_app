@@ -6,10 +6,21 @@ export default class App extends React.Component {
   // 데이터 api를 불러오게되면 이 값은 true가 된다.
   // 로딩 중에는 false
   state = {
-    isLoaded: true
+    isLoaded: false
   };
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(position => {
+        this.setState({
+          isLoaded: true
+        });
+      },
+      error => {
+        console.log(error);
+      } 
+    );
+  }
   render() {
-    const { isLoaded } = this.state;
+    const { isLoaded, error } = this.state;
     return (
       <View style={styles.container}>
         <StatusBar hidden={true} />
@@ -32,14 +43,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff"
   },
+  errorText: {
+    color: "red",
+    backgroundColor: "transparent",
+    marginBottom: 40
+  },
   loading: {
     flex: 1,
     backgroundColor: "#FDF6AA",
-    justifyContent: "flex-end"
-    , paddingLeft: 25
+    justifyContent: "flex-end", 
+    paddingLeft: 25
   },
   loadingText: {
-    fontSize: 40,
+    fontSize: 35,
     marginBottom: 100
   }
 });
