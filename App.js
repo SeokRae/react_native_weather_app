@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import Weather from "./Weather";
 
 export default class App extends React.Component {
   // 데이터 api를 불러오게되면 이 값은 true가 된다.
   // 로딩 중에는 false
   state = {
-    isLoaded: false
+    isLoaded: true
   };
   render() {
     const { isLoaded } = this.state;
     return (
       <View style={styles.container}>
-        {isLoaded ? null : (
+        {isLoaded ? (
+          <Weather />
+        ) : (
           <View style = {styles.loading}>
             <Text style = {styles.loadingText}>
               Getting the weather
