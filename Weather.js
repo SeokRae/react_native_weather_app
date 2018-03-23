@@ -4,6 +4,40 @@ import { LinearGradient } from 'expo';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import PropTypes from "prop-types";
 
+function Weather({weatherName, temp}) {
+    //console.log(weatherName)
+    //console.log(weatherCases)
+    return(
+        <LinearGradient 
+            colors={weatherCases[weatherName].colors}
+            style={styles.container} 
+        >
+            <View style={styles.upper}>
+                <MaterialCommunityIcons 
+                    color="white" 
+                    size={144} 
+                    name={weatherCases[weatherName].icon} 
+                />
+                <Text style={styles.temp}>{temp}℃</Text>
+            </View>
+            <View style={styles.lower}>
+                <Text style={styles.title}>
+                    {weatherCases[weatherName].title}
+                </Text>
+                <Text style={styles.subtitle}>
+                    {weatherCases[weatherName].subtitle}
+                </Text>
+            </View>
+        </LinearGradient>
+    )
+}
+export default Weather;
+
+Weather.propTypes = {
+    temp: PropTypes.number.isRequired,
+    weatherName: PropTypes.string.isRequired
+};
+
 const weatherCases = {
   Rain: {
     colors: ["#00C6FB", "#005BEA"],
@@ -55,39 +89,6 @@ const weatherCases = {
   }
 };
 
-function Weather({weatherName, temp}) {
-    //console.log(weatherName)
-    //console.log(weatherCases)
-    return(
-        <LinearGradient 
-            colors={weatherCases[weatherName].colors}
-            style={styles.container} 
-        >
-            <View style={styles.upper}>
-                <MaterialCommunityIcons 
-                    color="white" 
-                    size={144} 
-                    name={weatherCases[weatherName].icon} 
-                />
-                <Text style={styles.temp}>{temp}℃</Text>
-            </View>
-            <View style={styles.lower}>
-                <Text style={styles.title}>
-                    {weatherCases[weatherName].title}
-                </Text>
-                <Text style={styles.subtitle}>
-                    {weatherCases[weatherName].subtitle}
-                </Text>
-            </View>
-        </LinearGradient>
-    )
-}
-
-Weather.propTypes = {
-    temp: PropTypes.number.isRequired,
-    weatherName: PropTypes.string.isRequired
-};
-
 const styles = StyleSheet.create({
     container: {
         flex:1
@@ -125,4 +126,3 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Weather;
