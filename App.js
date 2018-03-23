@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import Weather from "./Weather";
 
-const API_KEY = "#";
+const API_KEY = "c631e4bf05cd6360dd895d4faab0094d";
 
 export default class App extends React.Component {
   // 데이터 api를 불러오게되면 이 값은 true가 된다.
@@ -24,6 +24,7 @@ export default class App extends React.Component {
       } 
     );
   }
+  // 노원구 위도, 경도 (37.6541917, 127.05679299999997)
   _getWeather = ( lat, lon ) => {
     fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=${API_KEY}`)
     .then(response => response.json())
@@ -37,16 +38,19 @@ export default class App extends React.Component {
     });
   };
   render() {
-    const { isLoaded, error } = this.state;
+    const { isLoaded, error, temperature, name } = this.state;
     return (
       <View style={styles.container}>
         <StatusBar hidden={true} />
         {isLoaded ? (
-          <Weather />
+          <Weather 
+            weatherName={name} 
+            temp = {Math.ceil(temperature - 273.15)}
+          />
         ) : (
           <View style = {styles.loading}>
             <Text style = {styles.loadingText}>
-              Getting the weather
+              Getting the weather Please Wait
             </Text>
             {error ? <Text style={styles.errorText}>{error}</Text> : null}
           </View>
@@ -74,6 +78,6 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     fontSize: 35,
-    marginBottom: 100
+    marginBottom: 24
   }
 });
